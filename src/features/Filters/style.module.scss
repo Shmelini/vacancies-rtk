@@ -1,0 +1,14 @@
+.pill {
+    display: flex;
+    align-items: center;
+}
+
+.input-button {
+    transition: opacity 0.2s, background-color 0.2s;
+
+    &:disabled,
+    &[data-disabled] {
+        background-color: #228BE6;
+        opacity: 0.6;
+    }
+}
