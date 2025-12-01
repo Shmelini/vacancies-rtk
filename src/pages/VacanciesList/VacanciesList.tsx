@@ -40,7 +40,7 @@ export function VacanciesList() {
   }, []);
 
   return (
-    <Flex w="100%" gap={24} direction="column" align="center">
+    <Flex mb={30} w="100%" gap={24} direction="column" align="center">
       {vacancies.length !== 0 ? (
         <>
           <Flex gap={16} direction="column">

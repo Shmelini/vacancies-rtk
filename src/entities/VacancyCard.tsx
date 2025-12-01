@@ -99,7 +99,7 @@ export function VacancyCard({ vacancy }: VacancyCardProps) {
         <p className={cx("vacancy-card__area")}>{vacancy.area.name}</p>
       </Flex>
       <Group mt="auto">
-        <Button w={172} fw={400} color="#0F0F10">
+        <Button fw={400} color="#0F0F10">
           Смотреть вакансию
         </Button>
         <Button color="rgba(15, 15, 16, 0.1)" c="#0F0F10">
