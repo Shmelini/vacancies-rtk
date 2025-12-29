@@ -98,6 +98,7 @@ const initialState = {
       },
     ],
     filterTags: ["TypeScript", "React", "Redux"],
+    searchQuery: "",
     currentAreaFilter: "0",
     isLoading: false,
     error: null,

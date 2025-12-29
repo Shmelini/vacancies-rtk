@@ -41,7 +41,7 @@ describe("VacancyCard component", () => {
     render(
       <MantineProvider>
         <Provider store={store()}>
-          <VacancyCard vacancy={vacancy} />
+          <VacancyCard vacancy={vacancy} source="list" />
         </Provider>
       </MantineProvider>
     );

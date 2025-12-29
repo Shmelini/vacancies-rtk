@@ -1,17 +1,19 @@
 import { Search } from "./Search";
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, vi } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
 import { MantineProvider } from "@mantine/core";
 import { Provider } from "react-redux";
 import { store } from "../../shared/store/store";
 
+const funcMock = vi.fn();
+
 describe("Filters component", () => {
   beforeEach(() => {
     render(
       <MantineProvider>
         <Provider store={store()}>
-          <Search />
+          <Search handleSearchChange={funcMock} />
         </Provider>
       </MantineProvider>
     );
