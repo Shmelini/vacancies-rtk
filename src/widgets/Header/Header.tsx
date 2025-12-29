@@ -1,8 +1,10 @@
-import { Anchor, Flex, Text, Image, Group } from "@mantine/core";
+import { Flex, Text, Image, Group } from "@mantine/core";
 import logo from "../../shared/images/logo.svg";
 import user from "../../shared/images/user.svg";
 import s from "./style.module.scss";
 import classNames from "classnames/bind";
+import { Link } from "react-router";
+import { CustomLink } from "../../shared/CustomLink";
 
 const cx = classNames.bind(s);
 
@@ -15,24 +17,24 @@ export function Header() {
       h={60}
       bg="#FFFFFF"
     >
-      <Anchor pos="absolute" ml={20} h={30} underline="never">
+      <Link to="/vacancies-rtk" className={cx("header__logo")}>
         <Group gap={10} align="center">
           <Image w={30} h={30} src={logo} />
           <Text fz={16} fw={600} c="#000000">
             .FrontEnd
           </Text>
         </Group>
-      </Anchor>
+      </Link>
       <Group ml="auto" mr="auto">
-        <Anchor c="#0F0F1080" fw={500} className={cx("header-link--active")}>
+        <CustomLink to="/vacancies-rtk/vacancies" className={cx("header-link")}>
           Вакансии FE
-        </Anchor>
-        <Anchor c="#0F0F1080" fw={500} className={cx()}>
+        </CustomLink>
+        <CustomLink to="/vacancies-rtk/profile" className={cx("header-link")}>
           <Group gap={4}>
             <Image w={24} h={24} src={user} />
             <Text>Обо мне</Text>
           </Group>
-        </Anchor>
+        </CustomLink>
       </Group>
     </Flex>
   );

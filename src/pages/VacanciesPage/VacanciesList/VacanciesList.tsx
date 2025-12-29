@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
-import { useTypedSelector, useTypedDispatch } from "../../hooks/redux";
-import { fetchVacancies } from "../../reducers/vacanciesThunk";
-import { VacancyCard } from "../../entities/VacancyCard";
-import type { Vacancy } from "../../app/types/types";
+import {
+  useTypedSelector,
+  useTypedDispatch,
+} from "../../../shared/hooks/redux";
+import { fetchVacancies } from "../../../shared/reducers/vacanciesThunk";
+import { VacancyCard } from "../../../entities/VacancyCard";
+import type { Vacancy } from "../../../app/types/types";
 import { Flex, Loader, Pagination } from "@mantine/core";
 
 export function VacanciesList() {
@@ -22,7 +25,7 @@ export function VacanciesList() {
   function chunkVacancies(vacancies: Vacancy[]) {
     const data = chunk(vacancies, 10);
     const items = data[activePage - 1].map((vacancy) => (
-      <VacancyCard key={vacancy.id} vacancy={vacancy} />
+      <VacancyCard key={vacancy.id} vacancy={vacancy} source="list" />
     ));
     return items;
   }

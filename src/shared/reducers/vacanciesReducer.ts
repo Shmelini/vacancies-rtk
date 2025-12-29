@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchVacancies } from "./vacanciesThunk";
-import type { Vacancy } from "../app/types/types";
+import type { Vacancy } from "../../app/types/types";
 
 type VacanciesState = {
   vacancies: Vacancy[];
+  searchQuery: string;
   filterTags: string[];
   currentAreaFilter: string;
   isLoading: boolean;
@@ -12,6 +13,7 @@ type VacanciesState = {
 
 const initialState: VacanciesState = {
   vacancies: [],
+  searchQuery: "",
   filterTags: ["TypeScript", "React", "Redux"],
   currentAreaFilter: "0",
   isLoading: false,
@@ -36,7 +38,11 @@ export const vacanciesSlice = createSlice({
       state.filterTags = filteredArr;
     },
     changeAreaFilter(state, action) {
+      console.log(action.payload);
       state.currentAreaFilter = action.payload.value;
+    },
+    changeSearchQuery(state, action) {
+      state.searchQuery = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -55,7 +61,11 @@ export const vacanciesSlice = createSlice({
   },
 });
 
-export const { addToSearchTags, removeSearchTag, changeAreaFilter } =
-  vacanciesSlice.actions;
+export const {
+  addToSearchTags,
+  removeSearchTag,
+  changeAreaFilter,
+  changeSearchQuery,
+} = vacanciesSlice.actions;
 
 export default vacanciesSlice.reducer;

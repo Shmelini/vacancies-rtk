@@ -10,60 +10,70 @@ import {
 import MapPin from "../../shared/images/pin.svg?react";
 import Cross from "../../shared/images/x.svg?react";
 import Plus from "../../shared/images/plus.svg?react";
-import { useTypedDispatch, useTypedSelector } from "../../hooks/redux";
+import { useTypedDispatch, useTypedSelector } from "../../shared/hooks/redux";
 import s from "./style.module.scss";
 import classNames from "classnames/bind";
 import {
   addToSearchTags,
   changeAreaFilter,
   removeSearchTag,
-} from "../../reducers/vacanciesReducer";
+} from "../../shared/reducers/vacanciesReducer";
 import { useEffect, useState } from "react";
-import { fetchVacancies } from "../../reducers/vacanciesThunk";
+import { fetchVacancies } from "../../shared/reducers/vacanciesThunk";
 
 const cx = classNames.bind(s);
 
-export function Filters() {
+type FiltersProps = {
+  handleAreaChange: (areafilter: string) => void;
+};
+
+export function Filters({ handleAreaChange }: FiltersProps) {
   const [input, setInput] = useState("");
   const tags = useTypedSelector((state) => state.vacancies.filterTags);
   const areaFilter = useTypedSelector(
     (state) => state.vacancies.currentAreaFilter
   );
+  const searchQuery = useTypedSelector((state) => state.vacancies.searchQuery);
 
   const dispatch = useTypedDispatch();
 
-  function handleAddTag() {
+  function handleAddTag(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     dispatch(addToSearchTags(input));
     setInput("");
   }
 
   useEffect(() => {
-    dispatch(fetchVacancies({ areaFilter: areaFilter }));
+    handleAreaChange(areaFilter);
+    dispatch(fetchVacancies({ searchQuery, areaFilter: areaFilter }));
   }, [areaFilter]);
   return (
     <Flex direction="column" gap={10}>
       <Card w={317}>
-        <Group mb={12}>
-          <Input
-            radius="md"
-            size="xs"
-            w={227}
-            placeholder="Навык"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-          />
-          <ActionIcon
-            radius="md"
-            w={34}
-            h={30}
-            disabled={input.length === 0 ? true : false}
-            className={cx("input-button")}
-            onClick={handleAddTag}
-            data-testid="add-btn"
-          >
-            <Plus />
-          </ActionIcon>
-        </Group>
+        <form onSubmit={handleAddTag}>
+          <Group mb={12}>
+            <Input
+              radius="md"
+              size="xs"
+              w={227}
+              placeholder="Навык"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+            />
+            <ActionIcon
+              radius="md"
+              w={34}
+              h={30}
+              disabled={input.length === 0 ? true : false}
+              className={cx("input-button")}
+              // onClick={handleAddTag}
+              type="submit"
+              data-testid="add-btn"
+            >
+              <Plus />
+            </ActionIcon>
+          </Group>
+        </form>
         <Pill.Group>
           {tags.map((tag) => (
             <Pill

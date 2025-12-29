@@ -5,7 +5,7 @@ import "@testing-library/jest-dom/vitest";
 import { MantineProvider } from "@mantine/core";
 import App from "./App";
 import { Provider } from "react-redux";
-import { store } from "../store/store";
+import { store } from "../shared/store/store";
 
 describe("App component", () => {
   it("компонент App должен рендериться", () => {

@@ -1,0 +1,16 @@
+.active {
+    color: $black !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+
+    &::after {
+        content: '';
+        display: block;
+        width: 6px;
+        height: 6px;
+        background-color: $primary;
+        border-radius: 100%;
+    }
+}

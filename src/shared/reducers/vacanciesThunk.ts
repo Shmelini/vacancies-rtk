@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 type FetchParams = {
   filterTags?: string[];
-  searchQuery?: string;
+  searchQuery?: string | null;
   areaFilter?: string;
 };
 
@@ -25,6 +25,7 @@ export const fetchVacancies = createAsyncThunk(
 
       if (!response.ok) throw new Error("Server Error");
       const data = await response.json();
+      console.log(fetchParams);
       return data;
     } catch (error) {
       if (error instanceof Error) return rejectWithValue(error.message);

@@ -1,0 +1,29 @@
+.vac-info {
+    p {
+        margin-bottom: 15px;
+    }
+
+    ol {
+        margin-bottom: 15px;
+    }
+
+    ul {
+        margin-bottom: 15px;
+    }
+
+    li {
+        margin-bottom: 15px;
+        display: flex;
+        gap: 6px;
+
+        &::before {
+            display: block;
+            content: "—";
+        }
+    }
+
+
+    strong {
+        font-weight: bolder;
+    }
+}

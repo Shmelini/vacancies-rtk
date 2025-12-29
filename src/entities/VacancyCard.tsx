@@ -1,15 +1,17 @@
-import { Badge, Button, Card, Flex, Group } from "@mantine/core";
+import { Anchor, Badge, Button, Card, Flex, Group } from "@mantine/core";
 import type { Vacancy } from "../app/types/types";
 import s from "./style.module.scss";
 import classNames from "classnames/bind";
+import { Link } from "react-router";
 
 const cx = classNames.bind(s);
 
 type VacancyCardProps = {
   vacancy: Vacancy;
+  source: string;
 };
 
-export function VacancyCard({ vacancy }: VacancyCardProps) {
+export function VacancyCard({ vacancy, source }: VacancyCardProps) {
   const salaryCurrencySymbol = (currency: string) => {
     switch (currency) {
       case "USD":
@@ -58,6 +60,47 @@ export function VacancyCard({ vacancy }: VacancyCardProps) {
     }
   }
 
+  function handleSourcePassing() {
+    switch (source) {
+      case "list":
+        return (
+          <Group mt="auto">
+            <Link to={`${vacancy.id}`}>
+              <Button fw={400} color="#0F0F10">
+                Смотреть вакансию
+              </Button>
+            </Link>
+            <Button color="rgba(15, 15, 16, 0.1)" c="#0F0F10">
+              <a
+                className={cx("vacancy-card__link")}
+                target="_blank"
+                rel="noopener noreferrer"
+                href={vacancy.alternate_url}
+              >
+                Откликнуться
+              </a>
+            </Button>
+          </Group>
+        );
+      case "item":
+        return (
+          <Group mt="auto">
+            <Button color="#0F0F10">
+              <Anchor
+                c={"white"}
+                underline="never"
+                target="_blank"
+                rel="noopener noreferrer"
+                href={vacancy.alternate_url}
+              >
+                Откликнуться на hh.ru
+              </Anchor>
+            </Button>
+          </Group>
+        );
+    }
+  }
+
   return (
     <Card radius={12} w={659} h="fit-content" className={cx("vacancy-card")}>
       <p className={cx("vacancy-card__name")}>{vacancy.name}</p>
@@ -98,10 +141,13 @@ export function VacancyCard({ vacancy }: VacancyCardProps) {
         )}
         <p className={cx("vacancy-card__area")}>{vacancy.area.name}</p>
       </Flex>
-      <Group mt="auto">
-        <Button fw={400} color="#0F0F10">
-          Смотреть вакансию
-        </Button>
+      {handleSourcePassing()}
+      {/* <Group mt="auto">
+        <Link to={`${vacancy.id}`}>
+          <Button fw={400} color="#0F0F10">
+            Смотреть вакансию
+          </Button>
+        </Link>
         <Button color="rgba(15, 15, 16, 0.1)" c="#0F0F10">
           <a
             className={cx("vacancy-card__link")}
@@ -112,7 +158,7 @@ export function VacancyCard({ vacancy }: VacancyCardProps) {
             Откликнуться
           </a>
         </Button>
-      </Group>
+      </Group> */}
     </Card>
   );
 }

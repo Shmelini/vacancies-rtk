@@ -1,21 +1,20 @@
-import { Container, Flex } from "@mantine/core";
 import "./App.scss";
-import { Search } from "../features/Search";
-import { VacanciesList } from "../pages/VacanciesList";
-import { Header } from "../widgets/Header";
-import { Filters } from "../features/Filters";
+import { Routes, Route } from "react-router";
+import { Layout } from "./Layout";
+import { VacanciesPage } from "../pages/VacanciesPage";
+import { ProfilePage } from "../pages/ProfilePage";
+import { VacancyPage } from "../pages/VacancyPage/VacancyPage";
 
 function App() {
   return (
     <>
-      <Header />
-      <Search />
-      <Container>
-        <Flex gap={24}>
-          <Filters />
-          <VacanciesList />
-        </Flex>
-      </Container>
+      <Routes>
+        <Route path="vacancies-rtk" element={<Layout />}>
+          <Route path="vacancies" element={<VacanciesPage />} />
+          <Route path="profile" element={<ProfilePage />} />
+          <Route path="vacancies/:id" element={<VacancyPage />} />
+        </Route>
+      </Routes>
     </>
   );
 }

@@ -2,19 +2,27 @@ import { Button, Container, Flex, Input, Text, Title } from "@mantine/core";
 import SearchImg from "../../shared/images/search.svg?react";
 import s from "./style.module.scss";
 import classNames from "classnames/bind";
-import { useState } from "react";
-import { useTypedDispatch } from "../../hooks/redux";
-import { fetchVacancies } from "../../reducers/vacanciesThunk";
+import { useTypedDispatch, useTypedSelector } from "../../shared/hooks/redux";
+import { fetchVacancies } from "../../shared/reducers/vacanciesThunk";
+import { changeSearchQuery } from "../../shared/reducers/vacanciesReducer";
 
 const cx = classNames.bind(s);
 
-export function Search() {
-  const [input, setInput] = useState("");
+type SearchProps = {
+  handleSearchChange: (text: string) => void;
+};
+
+export function Search({ handleSearchChange }: SearchProps) {
+  const searchInput = useTypedSelector((state) => state.vacancies.searchQuery);
+  const areaFilter = useTypedSelector(
+    (state) => state.vacancies.currentAreaFilter
+  );
 
   const dispatch = useTypedDispatch();
 
   function handleSearch() {
-    dispatch(fetchVacancies({ searchQuery: input }));
+    handleSearchChange(searchInput);
+    dispatch(fetchVacancies({ areaFilter, searchQuery: searchInput }));
   }
 
   return (
@@ -37,8 +45,8 @@ export function Search() {
             radius="md"
             size="md"
             c="#0F0F104D"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
+            value={searchInput}
+            onChange={(e) => dispatch(changeSearchQuery(e.target.value))}
             leftSection={<SearchImg className={cx("search__image")} />}
             placeholder="Должность или название компании"
           />

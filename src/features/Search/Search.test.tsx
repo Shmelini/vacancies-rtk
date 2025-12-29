@@ -4,7 +4,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
 import { MantineProvider } from "@mantine/core";
 import { Provider } from "react-redux";
-import { store } from "../../store/store";
+import { store } from "../../shared/store/store";
 
 describe("Filters component", () => {
   beforeEach(() => {
