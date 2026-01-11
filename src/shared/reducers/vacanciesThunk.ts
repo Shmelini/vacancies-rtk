@@ -12,7 +12,7 @@ export const fetchVacancies = createAsyncThunk(
       const { searchQuery = "", areaFilter = "0" } = fetchParams;
       const response = await fetch(
         `https://api.hh.ru/vacancies?industry=7&professional_role=96${
-          areaFilter !== "0" ? "&area=" + areaFilter : ""
+          areaFilter !== "0" && areaFilter !== "" ? "&area=" + areaFilter : ""
         }&text=${searchQuery}`,
         {
           headers: {

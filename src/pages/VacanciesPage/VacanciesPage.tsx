@@ -11,10 +11,9 @@ export function VacanciesPage() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const searchQuery = searchParams.get("text") || "";
-  let currentArea = searchParams.get("area") || "";
+  const currentArea = searchParams.get("area") || "0";
   const skillsetFilter = searchParams.get("skillset") || "";
 
-  if (currentArea == undefined) currentArea = "0";
   const dispatch = useTypedDispatch();
 
   function handleSearchChange(text: string) {
@@ -35,6 +34,7 @@ export function VacanciesPage() {
     if (areaFilter !== "0") {
       setSearchParams((prev) => {
         prev.set("area", areaFilter);
+
         return prev;
       });
     } else {
@@ -61,20 +61,12 @@ export function VacanciesPage() {
   }
 
   useEffect(() => {
-    if (currentArea) {
-      dispatch(
-        fetchVacancies({
-          areaFilter: currentArea,
-          searchQuery: searchQuery,
-        })
-      );
-    } else {
-      dispatch(
-        fetchVacancies({
-          searchQuery: searchQuery,
-        })
-      );
-    }
+    dispatch(
+      fetchVacancies({
+        areaFilter: currentArea,
+        searchQuery: searchQuery,
+      })
+    );
   }, [currentArea, dispatch]);
 
   return (

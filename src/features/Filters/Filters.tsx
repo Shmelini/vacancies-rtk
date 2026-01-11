@@ -131,7 +131,7 @@ export function Filters({
             { value: "1", label: "Москва" },
             { value: "2", label: "Санкт-Петербург" },
           ]}
-          value={currentArea}
+          value={currentArea !== "0" ? currentArea : "0"}
           onChange={(_, option) => {
             dispatch(changeAreaFilter(option));
           }}
