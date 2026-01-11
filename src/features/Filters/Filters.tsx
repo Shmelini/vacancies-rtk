@@ -6,6 +6,7 @@ import {
   Input,
   Pill,
   Select,
+  type ComboboxItem,
 } from "@mantine/core";
 import MapPin from "../../shared/images/pin.svg?react";
 import Cross from "../../shared/images/x.svg?react";
@@ -57,10 +58,9 @@ export function Filters({
     }
   }
 
-  function handleAreaSync(area: string) {
-    if (area) {
-      dispatch(changeAreaFilter(area));
-    }
+  function handleAreaSync(option: ComboboxItem) {
+    handleAreaChange(areaFilter);
+    option !== null && dispatch(changeAreaFilter(option));
   }
 
   useEffect(() => {
@@ -73,7 +73,6 @@ export function Filters({
 
   useEffect(() => {
     handleFiltersSync(skillsetFilter);
-    handleAreaSync(currentArea);
   }, [dispatch]);
   return (
     <Flex direction="column" gap={10}>
@@ -131,10 +130,8 @@ export function Filters({
             { value: "1", label: "Москва" },
             { value: "2", label: "Санкт-Петербург" },
           ]}
-          value={currentArea !== "0" ? currentArea : "0"}
-          onChange={(_, option) => {
-            dispatch(changeAreaFilter(option));
-          }}
+          value={currentArea}
+          onChange={(_, option) => handleAreaSync(option)}
           comboboxProps={{
             position: "bottom",
             middlewares: { flip: false, shift: false },

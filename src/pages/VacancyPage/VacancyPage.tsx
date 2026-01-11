@@ -22,7 +22,6 @@ export function VacancyPage() {
       .then((response) => response.json())
       .then((json) => {
         setVacancy(json);
-        console.log(json.description);
       });
   }, [id]);
 
