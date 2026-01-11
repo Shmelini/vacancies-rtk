@@ -41,7 +41,8 @@ export const vacanciesSlice = createSlice({
       state.filterTags = action.payload;
     },
     changeAreaFilter(state, action) {
-      state.currentAreaFilter = action.payload.value;
+      const area = action.payload.value;
+      if (area !== undefined) state.currentAreaFilter = area;
     },
     changeSearchQuery(state, action) {
       state.searchQuery = action.payload;
