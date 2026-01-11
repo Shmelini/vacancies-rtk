@@ -6,7 +6,7 @@ import svgr from "vite-plugin-svgr";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), svgr()],
-  base: "vacancies-rtk",
+  base: "/vacancies-rtk/vacancies",
   test: {
     globals: true,
     environment: "jsdom",

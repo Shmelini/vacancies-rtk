@@ -25,7 +25,6 @@ export const fetchVacancies = createAsyncThunk(
 
       if (!response.ok) throw new Error("Server Error");
       const data = await response.json();
-      console.log(fetchParams);
       return data;
     } catch (error) {
       if (error instanceof Error) return rejectWithValue(error.message);

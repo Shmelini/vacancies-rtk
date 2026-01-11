@@ -13,7 +13,7 @@ describe("Filters component", () => {
     render(
       <MantineProvider>
         <Provider store={store()}>
-          <Filters handleAreaChange={funcMock} />
+          <Filters handleAreaChange={funcMock} handleFilterChange={funcMock} />
         </Provider>
       </MantineProvider>
     );

@@ -37,8 +37,10 @@ export const vacanciesSlice = createSlice({
       );
       state.filterTags = filteredArr;
     },
+    syncSearchTags(state, action) {
+      state.filterTags = action.payload;
+    },
     changeAreaFilter(state, action) {
-      console.log(action.payload);
       state.currentAreaFilter = action.payload.value;
     },
     changeSearchQuery(state, action) {
@@ -64,6 +66,7 @@ export const vacanciesSlice = createSlice({
 export const {
   addToSearchTags,
   removeSearchTag,
+  syncSearchTags,
   changeAreaFilter,
   changeSearchQuery,
 } = vacanciesSlice.actions;

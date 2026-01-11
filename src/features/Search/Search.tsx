@@ -5,14 +5,16 @@ import classNames from "classnames/bind";
 import { useTypedDispatch, useTypedSelector } from "../../shared/hooks/redux";
 import { fetchVacancies } from "../../shared/reducers/vacanciesThunk";
 import { changeSearchQuery } from "../../shared/reducers/vacanciesReducer";
+import { useEffect } from "react";
 
 const cx = classNames.bind(s);
 
 type SearchProps = {
   handleSearchChange: (text: string) => void;
+  searchQuery: string;
 };
 
-export function Search({ handleSearchChange }: SearchProps) {
+export function Search({ handleSearchChange, searchQuery }: SearchProps) {
   const searchInput = useTypedSelector((state) => state.vacancies.searchQuery);
   const areaFilter = useTypedSelector(
     (state) => state.vacancies.currentAreaFilter
@@ -24,6 +26,9 @@ export function Search({ handleSearchChange }: SearchProps) {
     handleSearchChange(searchInput);
     dispatch(fetchVacancies({ areaFilter, searchQuery: searchInput }));
   }
+  useEffect(() => {
+    dispatch(changeSearchQuery(searchQuery));
+  }, [searchQuery]);
 
   return (
     <div className={cx("search-container")}>
@@ -46,7 +51,9 @@ export function Search({ handleSearchChange }: SearchProps) {
             size="md"
             c="#0F0F104D"
             value={searchInput}
-            onChange={(e) => dispatch(changeSearchQuery(e.target.value))}
+            onChange={(e) => {
+              dispatch(changeSearchQuery(e.target.value));
+            }}
             leftSection={<SearchImg className={cx("search__image")} />}
             placeholder="Должность или название компании"
           />

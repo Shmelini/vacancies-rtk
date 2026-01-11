@@ -1,18 +1,12 @@
-import { useEffect, useState } from "react";
-import {
-  useTypedSelector,
-  useTypedDispatch,
-} from "../../../shared/hooks/redux";
-import { fetchVacancies } from "../../../shared/reducers/vacanciesThunk";
+import { useState } from "react";
+import { useTypedSelector } from "../../../shared/hooks/redux";
 import { VacancyCard } from "../../../entities/VacancyCard";
 import type { Vacancy } from "../../../app/types/types";
 import { Flex, Loader, Pagination } from "@mantine/core";
 
 export function VacanciesList() {
   const [activePage, setActivePage] = useState(1);
-
-  const dispatch = useTypedDispatch();
-  const { vacancies } = useTypedSelector((state) => state.vacancies);
+  const vacancies = useTypedSelector((state) => state.vacancies.vacancies);
 
   function chunk<T>(array: T[], size: number): T[][] {
     if (!array.length) {
@@ -37,10 +31,6 @@ export function VacanciesList() {
     });
     setActivePage(page);
   }
-
-  useEffect(() => {
-    vacancies.length === 0 && dispatch(fetchVacancies({}));
-  }, []);
 
   return (
     <Flex mb={30} w="100%" gap={24} direction="column" align="center">

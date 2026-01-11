@@ -17,23 +17,30 @@ import {
   addToSearchTags,
   changeAreaFilter,
   removeSearchTag,
+  syncSearchTags,
 } from "../../shared/reducers/vacanciesReducer";
 import { useEffect, useState } from "react";
-import { fetchVacancies } from "../../shared/reducers/vacanciesThunk";
 
 const cx = classNames.bind(s);
 
 type FiltersProps = {
+  currentArea: string;
+  skillsetFilter: string;
   handleAreaChange: (areafilter: string) => void;
+  handleFilterChange: (skillset: string[]) => void;
 };
 
-export function Filters({ handleAreaChange }: FiltersProps) {
+export function Filters({
+  currentArea,
+  skillsetFilter,
+  handleAreaChange,
+  handleFilterChange,
+}: FiltersProps) {
   const [input, setInput] = useState("");
   const tags = useTypedSelector((state) => state.vacancies.filterTags);
   const areaFilter = useTypedSelector(
     (state) => state.vacancies.currentAreaFilter
   );
-  const searchQuery = useTypedSelector((state) => state.vacancies.searchQuery);
 
   const dispatch = useTypedDispatch();
 
@@ -43,10 +50,31 @@ export function Filters({ handleAreaChange }: FiltersProps) {
     setInput("");
   }
 
+  function handleFiltersSync(filtersString: string) {
+    if (filtersString) {
+      const parsedString = filtersString.split(",");
+      filtersString.length && dispatch(syncSearchTags(parsedString));
+    }
+  }
+
+  function handleAreaSync(area: string) {
+    if (area) {
+      dispatch(changeAreaFilter(area));
+    }
+  }
+
   useEffect(() => {
     handleAreaChange(areaFilter);
-    dispatch(fetchVacancies({ searchQuery, areaFilter: areaFilter }));
   }, [areaFilter]);
+
+  useEffect(() => {
+    handleFilterChange(tags);
+  }, [tags]);
+
+  useEffect(() => {
+    handleFiltersSync(skillsetFilter);
+    handleAreaSync(currentArea);
+  }, [dispatch]);
   return (
     <Flex direction="column" gap={10}>
       <Card w={317}>
@@ -66,7 +94,6 @@ export function Filters({ handleAreaChange }: FiltersProps) {
               h={30}
               disabled={input.length === 0 ? true : false}
               className={cx("input-button")}
-              // onClick={handleAddTag}
               type="submit"
               data-testid="add-btn"
             >
@@ -84,7 +111,9 @@ export function Filters({ handleAreaChange }: FiltersProps) {
                 icon: <Cross data-testid="remove-btn" />,
               }}
               withRemoveButton
-              onRemove={() => dispatch(removeSearchTag(tag))}
+              onRemove={() => {
+                dispatch(removeSearchTag(tag));
+              }}
               fz={12}
               w="fit-content"
             >
@@ -102,8 +131,10 @@ export function Filters({ handleAreaChange }: FiltersProps) {
             { value: "1", label: "Москва" },
             { value: "2", label: "Санкт-Петербург" },
           ]}
-          value={areaFilter}
-          onChange={(_, option) => dispatch(changeAreaFilter(option))}
+          value={currentArea}
+          onChange={(_, option) => {
+            dispatch(changeAreaFilter(option));
+          }}
           comboboxProps={{
             position: "bottom",
             middlewares: { flip: false, shift: false },
