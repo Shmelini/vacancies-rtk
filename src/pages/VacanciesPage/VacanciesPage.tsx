@@ -14,7 +14,7 @@ export function VacanciesPage() {
   let currentArea = searchParams.get("area") || "";
   const skillsetFilter = searchParams.get("skillset") || "";
 
-  if (!currentArea) currentArea = "0";
+  if (currentArea == undefined) currentArea = "0";
   const dispatch = useTypedDispatch();
 
   function handleSearchChange(text: string) {
