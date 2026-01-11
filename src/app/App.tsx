@@ -1,5 +1,5 @@
 import "./App.scss";
-import { Routes, Route } from "react-router";
+import { Routes, Route, Navigate } from "react-router";
 import { Layout } from "./Layout";
 import { VacanciesPage } from "../pages/VacanciesPage";
 import { ProfilePage } from "../pages/ProfilePage";
@@ -10,6 +10,7 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Layout />}>
+          <Route index element={<Navigate to="vacancies" replace />} />
           <Route path="vacancies" element={<VacanciesPage />} />
           <Route path="profile" element={<ProfilePage />} />
           <Route path="vacancies/:id" element={<VacancyPage />} />
