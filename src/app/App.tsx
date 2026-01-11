@@ -9,7 +9,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="vacancies-rtk" element={<Layout />}>
+        <Route path="/" element={<Layout />}>
           <Route path="vacancies" element={<VacanciesPage />} />
           <Route path="profile" element={<ProfilePage />} />
           <Route path="vacancies/:id" element={<VacancyPage />} />

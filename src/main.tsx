@@ -8,7 +8,7 @@ import "./reset.css";
 import "./shared/fonts/fonts.css";
 import "@mantine/core/styles.css";
 import "./main.scss";
-import { BrowserRouter } from "react-router";
+import { HashRouter } from "react-router";
 
 const theme = createTheme({
   fontFamily: "Open-Sans",
@@ -17,12 +17,12 @@ const theme = createTheme({
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
+    <HashRouter>
       <Provider store={store()}>
         <MantineProvider theme={theme}>
           <App />
         </MantineProvider>
       </Provider>
-    </BrowserRouter>
+    </HashRouter>
   </StrictMode>
 );
