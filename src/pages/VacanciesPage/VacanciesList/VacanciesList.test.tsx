@@ -99,7 +99,7 @@ const initialState = {
     ],
     filterTags: ["TypeScript", "React", "Redux"],
     searchQuery: "",
-    currentAreaFilter: "0",
+    currentAreaFilter: { name: "moscow", value: "1" },
     isLoading: false,
     error: null,
   },
@@ -112,7 +112,7 @@ describe("VacanciesList component", () => {
         <Provider store={testStore}>
           <VacanciesList />
         </Provider>
-      </MantineProvider>
+      </MantineProvider>,
     );
 
     expect(screen.getByText(/react/i)).toBeInTheDocument();
@@ -126,7 +126,7 @@ describe("VacanciesList component", () => {
         <Provider store={store()}>
           <VacanciesList />
         </Provider>
-      </MantineProvider>
+      </MantineProvider>,
     );
 
     const loader = screen.getByTestId("loader");
