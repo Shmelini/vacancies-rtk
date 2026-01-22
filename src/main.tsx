@@ -24,5 +24,5 @@ createRoot(document.getElementById("root")!).render(
         </MantineProvider>
       </Provider>
     </HashRouter>
-  </StrictMode>
+  </StrictMode>,
 );

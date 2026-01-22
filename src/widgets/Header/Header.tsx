@@ -5,10 +5,14 @@ import s from "./style.module.scss";
 import classNames from "classnames/bind";
 import { Link } from "react-router";
 import { CustomLink } from "../../shared/CustomLink";
+import { useTypedSelector } from "../../shared/hooks/redux";
 
 const cx = classNames.bind(s);
 
 export function Header() {
+  const area = useTypedSelector(
+    (state) => state.vacancies.currentAreaFilter.name,
+  );
   return (
     <Flex
       className={cx("header")}
@@ -26,7 +30,7 @@ export function Header() {
         </Group>
       </Link>
       <Group ml="auto" mr="auto">
-        <CustomLink to="vacancies" className={cx("header-link")}>
+        <CustomLink to={`vacancies/${area}`} className={cx("header-link")}>
           Вакансии FE
         </CustomLink>
         <CustomLink to="profile" className={cx("header-link")}>

@@ -55,7 +55,7 @@ export function VacancyCard({ vacancy, source }: VacancyCardProps) {
       return `Опыт ${from}-${to} ${declensionOfYears(Number(to))}`;
     } else if (expId.includes("more")) {
       return `Опыт более ${expId.slice(-1)} ${declensionOfYears(
-        Number(expId.slice(-1))
+        Number(expId.slice(-1)),
       )}`;
     }
   }

@@ -14,7 +14,7 @@ type SingleVacancy = Vacancy & {
 };
 
 export function VacancyPage() {
-  const { id } = useParams();
+  const { area, id } = useParams();
   const [vacancy, setVacancy] = useState<SingleVacancy | null>(null);
 
   useEffect(() => {
@@ -30,16 +30,8 @@ export function VacancyPage() {
       <Flex direction="column" align="center" gap={29}>
         {vacancy && <VacancyCard vacancy={vacancy} source="item" />}
         <Card radius={12} w={659} h="fit-content">
+          <Flex direction="column" gap={16}></Flex>
           <Flex direction="column" gap={16}>
-            {/* <Title order={3} fw={600} fz={24} c={"#000000"}>
-              Компания
-            </Title>
-            <Text fw={400} fz={16} c={"#000000"}></Text> */}
-          </Flex>
-          <Flex direction="column" gap={16}>
-            {/* <Title order={4} w={600} fz={16} c={"#000000"}>
-              О проекте:
-            </Title> */}
             <Text fw={400} fz={16} c={"#000000"} className={cx("vac-info")}>
               {vacancy && parse(vacancy.description)}
             </Text>

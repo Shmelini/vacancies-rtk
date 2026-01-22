@@ -6,7 +6,10 @@ type VacanciesState = {
   vacancies: Vacancy[];
   searchQuery: string;
   filterTags: string[];
-  currentAreaFilter: string;
+  currentAreaFilter: {
+    name: string;
+    value: string;
+  };
   isLoading: boolean;
   error: string | null | unknown;
 };
@@ -15,7 +18,7 @@ const initialState: VacanciesState = {
   vacancies: [],
   searchQuery: "",
   filterTags: ["TypeScript", "React", "Redux"],
-  currentAreaFilter: "0",
+  currentAreaFilter: { name: "moscow", value: "1" },
   isLoading: false,
   error: null,
 };
@@ -33,7 +36,7 @@ export const vacanciesSlice = createSlice({
     removeSearchTag(state, action) {
       const targetTag = action.payload;
       const filteredArr = state.filterTags.filter(
-        (item) => item !== targetTag && item
+        (item) => item !== targetTag && item,
       );
       state.filterTags = filteredArr;
     },
@@ -41,7 +44,7 @@ export const vacanciesSlice = createSlice({
       state.filterTags = action.payload;
     },
     changeAreaFilter(state, action) {
-      const area = action.payload.value;
+      const area = action.payload;
       if (area !== undefined) state.currentAreaFilter = area;
     },
     changeSearchQuery(state, action) {
@@ -49,7 +52,8 @@ export const vacanciesSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchVacancies.pending, (state) => {
+    (builder.addCase(fetchVacancies.pending, (state) => {
+      state.vacancies = [];
       state.isLoading = true;
       state.error = null;
     }),
@@ -60,7 +64,7 @@ export const vacanciesSlice = createSlice({
       builder.addCase(fetchVacancies.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-      });
+      }));
   },
 });
 

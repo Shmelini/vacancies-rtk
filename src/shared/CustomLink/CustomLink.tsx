@@ -7,7 +7,10 @@ type CustomLinkProps = {
 };
 
 export function CustomLink({ children, to, className }: CustomLinkProps) {
-  const match = useMatch(to);
+  const match = useMatch({
+    path: to,
+    end: to.length === 1,
+  });
 
   return (
     <Link to={to} className={match ? `${className} active` : className}>

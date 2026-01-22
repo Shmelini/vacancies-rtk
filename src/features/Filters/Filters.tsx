@@ -1,14 +1,4 @@
-import {
-  ActionIcon,
-  Card,
-  Flex,
-  Group,
-  Input,
-  Pill,
-  Select,
-  type ComboboxItem,
-} from "@mantine/core";
-import MapPin from "../../shared/images/pin.svg?react";
+import { ActionIcon, Card, Flex, Group, Input, Pill } from "@mantine/core";
 import Cross from "../../shared/images/x.svg?react";
 import Plus from "../../shared/images/plus.svg?react";
 import { useTypedDispatch, useTypedSelector } from "../../shared/hooks/redux";
@@ -16,7 +6,6 @@ import s from "./style.module.scss";
 import classNames from "classnames/bind";
 import {
   addToSearchTags,
-  changeAreaFilter,
   removeSearchTag,
   syncSearchTags,
 } from "../../shared/reducers/vacanciesReducer";
@@ -25,23 +14,13 @@ import { useEffect, useState } from "react";
 const cx = classNames.bind(s);
 
 type FiltersProps = {
-  currentArea: string;
   skillsetFilter: string;
-  handleAreaChange: (areafilter: string) => void;
   handleFilterChange: (skillset: string[]) => void;
 };
 
-export function Filters({
-  currentArea,
-  skillsetFilter,
-  handleAreaChange,
-  handleFilterChange,
-}: FiltersProps) {
+export function Filters({ skillsetFilter, handleFilterChange }: FiltersProps) {
   const [input, setInput] = useState("");
   const tags = useTypedSelector((state) => state.vacancies.filterTags);
-  const areaFilter = useTypedSelector(
-    (state) => state.vacancies.currentAreaFilter
-  );
 
   const dispatch = useTypedDispatch();
 
@@ -58,18 +37,9 @@ export function Filters({
     }
   }
 
-  function handleAreaSync(option: ComboboxItem) {
-    handleAreaChange(areaFilter);
-    option !== null && dispatch(changeAreaFilter(option));
-  }
-
-  useEffect(() => {
-    handleAreaChange(areaFilter);
-  }, [areaFilter]);
-
   useEffect(() => {
     handleFilterChange(tags);
-  }, [tags]);
+  }, [tags, skillsetFilter]);
 
   useEffect(() => {
     handleFiltersSync(skillsetFilter);
@@ -120,24 +90,6 @@ export function Filters({
             </Pill>
           ))}
         </Pill.Group>
-      </Card>
-      <Card w={317} p={24}>
-        <Select
-          c="#0F0F104D"
-          leftSection={<MapPin />}
-          data={[
-            { value: "0", label: "Все города" },
-            { value: "1", label: "Москва" },
-            { value: "2", label: "Санкт-Петербург" },
-          ]}
-          value={currentArea}
-          onChange={(_, option) => handleAreaSync(option)}
-          comboboxProps={{
-            position: "bottom",
-            middlewares: { flip: false, shift: false },
-          }}
-          placeholder="Все города"
-        />
       </Card>
     </Flex>
   );

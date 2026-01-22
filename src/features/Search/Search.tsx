@@ -17,14 +17,19 @@ type SearchProps = {
 export function Search({ handleSearchChange, searchQuery }: SearchProps) {
   const searchInput = useTypedSelector((state) => state.vacancies.searchQuery);
   const areaFilter = useTypedSelector(
-    (state) => state.vacancies.currentAreaFilter
+    (state) => state.vacancies.currentAreaFilter,
   );
 
   const dispatch = useTypedDispatch();
 
   function handleSearch() {
     handleSearchChange(searchInput);
-    dispatch(fetchVacancies({ areaFilter, searchQuery: searchInput }));
+    dispatch(
+      fetchVacancies({
+        areaFilter: areaFilter.value,
+        searchQuery: searchInput,
+      }),
+    );
   }
   useEffect(() => {
     dispatch(changeSearchQuery(searchQuery));
