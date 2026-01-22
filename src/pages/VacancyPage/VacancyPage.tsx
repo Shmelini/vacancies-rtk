@@ -14,10 +14,11 @@ type SingleVacancy = Vacancy & {
 };
 
 export function VacancyPage() {
-  const { area, id } = useParams();
+  const { id } = useParams();
   const [vacancy, setVacancy] = useState<SingleVacancy | null>(null);
 
   useEffect(() => {
+    console.log(id);
     fetch(`https://api.hh.ru/vacancies/${id}`)
       .then((response) => response.json())
       .then((json) => {
