@@ -39,7 +39,7 @@ function App() {
               </ValidateArea>
             }
           />
-          <Route path="profile" element={<ProfilePage />} />
+          <Route path="about" element={<ProfilePage />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

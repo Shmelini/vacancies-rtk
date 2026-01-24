@@ -33,7 +33,7 @@ export function Header() {
         <CustomLink to={`vacancies/${area}`} className={cx("header-link")}>
           Вакансии FE
         </CustomLink>
-        <CustomLink to="profile" className={cx("header-link")}>
+        <CustomLink to="about" className={cx("header-link")}>
           <Group gap={4}>
             <Image w={24} h={24} src={user} />
             <Text>Обо мне</Text>

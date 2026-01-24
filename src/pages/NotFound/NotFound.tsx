@@ -16,8 +16,8 @@ const cx = classNames.bind(s);
 
 export function NotFound() {
   return (
-    <Container w={707}>
-      <Card>
+    <Container w={707} mt={24} mb={24}>
+      <Card radius={12} p={32}>
         <Stack gap={32}>
           <Group justify="space-between" preventGrowOverflow>
             <Stack gap={12} w={450}>
